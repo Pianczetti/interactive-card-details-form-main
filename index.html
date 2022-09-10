@@ -10,19 +10,150 @@
 
   <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&display=swap');
     .attribution { font-size: 11px; text-align: center; }
     .attribution a { color: hsl(228, 45%, 44%); }
+    * {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    body { margin: 0; }
+    form, .submit-container { display:flex;
+      align-self: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 350px;
+    }
+
+    .submit-container {
+      text-align: center;
+    }
+
+    .submit-container img {
+      width: 50%;
+      margin: auto;
+    }
+
+    @media(min-width: 1410px) {
+    main { 
+      display: flex; 
+      letter-spacing: 3px;
+      height: 100vh;
+    }
+    label {
+        margin: 10px 0;
+        text-transform: uppercase;
+      }
+    .left {
+      flex: 1;
+      background: url(images/bg-main-desktop.png) no-repeat;
+    }
+    .right {
+      flex: 2; 
+      display: flex; 
+      flex-direction: column; 
+      align-content: center; 
+      justify-content: center;
+    }
+
+    .front-image-container { 
+      position: relative; 
+      margin-top: 50px; 
+      color: white; 
+      left: 30%; 
+      top: 10%;
+    }
+    .front-image-container p { 
+      position: absolute;
+    }
+    .back-image-container {
+      position: relative; 
+      top: 15%; 
+      left: 55%;
+    }
+
+  }
+  .hide { display: none;}
+ 
+  .holder {  
+      bottom: 10px;
+      left: 5%;
+      text-transform: uppercase;
+    }
+    .date {
+      bottom: 10px;
+      right: 35%;
+    }
+    .cvc {
+      position: absolute;
+      color: #fff;
+      top: 95px;
+      left: 55%;
+    }
+    .number { 
+      font-size: 28px; 
+      bottom: 30px; 
+      left: 5%;
+    }
+    /* #name, #card-number{
+      height: 40px;} */
+    #input-month, #input-year{
+      width: 25%;
+    }
+    #input-cvc {
+      width: 50%;
+      
+    }
+    #confirm, #continue-btn {
+      cursor: pointer;
+      margin-top: 15px;
+      background: #000;
+      color: #fff;
+      height: 45px;
+      border: none;
+      border-radius: 5px;
+    }
+    #confirm:hover{
+      background: rgb(31, 30, 30);
+    }
+
+    #confirm:active{
+      background: rgb(75, 74, 74);
+    }
+
+    input[type="text"] {
+      padding: 10px; 
+      border-radius: 5px;
+      border: 1px solid gray;}
+
+    .inputs, .labels{ 
+      display: flex;
+      gap: 10px;}
+
+    .error {
+      margin: 3px;
+      color: red;
+      font-size: 10px;
+      visibility: hidden;
+    }
   </style>
 </head>
 <body>
+  <main>
+<div class="left">
+  <div class="front-image-container">  
+    <img src="./images/bg-card-front.png" alt="Card front">
+    <p class="number">0000 0000 0000 0000</p>
+    <p class="holder">Jane Appleseed</p>
+    <p class="date">00/00</p>
+  </div>
+  <div class="back-image-container">
+    <img src="./images/bg-card-back.png" alt="Card back">
+    <p class="cvc">000</p>
+    
+  </div>
 
-  0000 0000 0000 0000
-  Jane Appleseed
-  00/00
 
-  000
-
-  Cardholder Name
+  <!-- Cardholder Name
   e.g. Jane Appleseed
 
   Card Number
@@ -35,17 +166,105 @@
   CVC
   e.g. 123
 
-  Confirm
+  Confirm -->
+</div>
+<div class="right">
+  <form id="card-details-form">
+    <label for="">Cardholder name</label>
+    <input type="text" id = "input-holder" class="inp" placeholder="e.g. Jane Appleseed" maxlength="22">
+    <p class="error">Can't be blank</p>
+    <label for="">Card number</label>
+    <input type="text" id = "input-number" class="inp" placeholder ="1234 5678 9123 0000" maxlength="16">
+    <p class="error">Can't be blank</p>
+    <div class="date-cvc">
+      <div class="labels">
+      <p>Exp. date (MM/YY)</p>
+      <p>CVC</p>
+      </div>
+      <div class="inputs">
+        <div>
+        <input type="text" id="input-date" class="inp" placeholder="MM/YY" maxlength="5">
+        <p class="error">Can't be blank</p>
+        </div>
+        <div>
+        <input type="text" id="input-cvc" class="inp" placeholder="CVC" maxlength="3">
+        <p class="error">Can't be blank</p>
+        </div>
+      </div>
+    </div>
+    <input type="button" id="confirm" value="Confirm">
+  </form>
 
-  <!-- Completed state start -->
-
-  Thank you!
-  We've added your card details
-  Continue
-  
+  <div class="submit-container hide">
+    <img src="images/icon-complete.svg" alt="" />
+    <div>
+      <h2>Thank you!</h2>
+      <p>We've added your card details</p>
+    </div>
+    <button type="button" class="continue-button" id="continue-btn">
+      Continue
+    </button>
+  </div>
+</div>
+</main>
   <div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
+    Coded by <a href="#">Pianczetti</a>.
   </div>
+
+
+<script>
+    const confirmBtn = document.querySelector('#confirm');
+    const continueBtn = document.querySelector('#continue-btn');
+    const inputs = document.querySelectorAll('input[type="text"]');
+    const errorFields = document.getElementsByClassName("error");
+   
+
+    confirmBtn.addEventListener('click', e => {
+      let errorCheck = 0;
+
+      for(let i = 0; i < inputs.length; i++){
+          if(inputs[i].value === ""){
+              errorFields[i].style.visibility = "visible";
+              inputs[i].style.border = "1px solid red";
+              errorCheck = 1;
+          }
+          else{
+            errorFields[i].style.visibility = "hidden";
+            inputs[i].style.border = "1px solid gray";
+          }
+      }
+
+      if(!errorCheck){
+        
+      e.target.parentElement.classList.toggle('hide');
+      continueBtn.parentElement.classList.toggle('hide');
+      }
+    })
+
+    continueBtn.addEventListener('click', e => {
+      e.target.parentElement.classList.toggle('hide');
+      confirmBtn.parentElement.classList.toggle('hide');
+      inputs.forEach(input => {
+        input.value = "";
+      })
+    })
+
+  function eventKeyUp(inputs)
+  {
+    inputs.forEach(input => {    
+      input.addEventListener('keyup', e => {
+        const attr = input.id.split('-')[1];
+        const target = document.querySelector(`.${attr}`)
+        target.innerHTML = e.target.value;
+      });
+    });
+  }
+
+  eventKeyUp(inputs);
+
+
+</script>
+
 </body>
 </html>
