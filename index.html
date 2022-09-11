@@ -115,11 +115,6 @@
       color: white;
       left: 150px;
       top: 200px;
-      /* position: relative; 
-      margin-top: 50px; 
-      color: white; 
-      left: 30%; 
-      top: 10%; */
     }
     .front-image-container p { 
       position: absolute;
@@ -128,13 +123,7 @@
       position: absolute;
       top: 485px;
       left: 245px;
-      /* position: relative; 
-      top: 15%; 
-      left: 55%; */
     }
-
-    /* #name, #card-number{
-      height: 40px;} */
 
   }
   .holder {  
@@ -308,8 +297,6 @@
         const attr = input.id.split('-')[1];
         const target = document.querySelector(`.${attr}`)
         target.innerHTML = placeholdersArr[index];
-        // console.log(input.placeholder);
-        // console.log(placeholdersArr[index]);
         console.log(index);
         index++;
       })
@@ -321,14 +308,6 @@
       input.addEventListener('input', e => {
         const attr = input.id.split('-')[1];
         const cardElement = document.querySelector(`.${attr}`);
-        // if(attr == 'number' && input.value.length > 0) {
-        //   if (input.value.length < 5 && input.value.length % 4 == 0) {
-        //     input.value += " ";
-        // }
-        //   else if(input.value.length % 5 == 4){
-        //       input.value += " ";
-        //   }
-        // }
 
         if(attr == 'number'){
           e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
